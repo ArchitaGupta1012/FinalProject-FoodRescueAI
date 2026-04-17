@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* RESET */
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* BODY */
+  body {
+      background: linear-gradient(to right, #f4f7f6, #e8f5e9);
+      color: #333;
+  }
+
+  /* NAVBAR */
+  .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: #1b5e20;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  /* LOGO */
+  .logo {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+  }
+
+  /* NAV LINKS */
+  nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.3s;
+  }
+
+  nav a:hover {
+      color: #a5d6a7;
+  }
+
+  /* DROPDOWN */
+  .dropdown {
+      position: relative;
+      display: inline-block;
+      margin: 0 15px;
+      cursor: pointer;
+  }
+
+  .dropdown span {
+      color: white;
+      font-weight: 500;
+  }
+
+  /* DROPDOWN FIX */
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 150px;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      z-index: 999;
+      overflow: hidden;
+  }
+
+  .dropdown-content a {
+      display: block;
+      padding: 10px;
+      color: #333;
+      text-decoration: none;
+  }
+
+  .dropdown-content a:hover {
+      background: #e8f5e9;
+  }
+
+  .dropdown:hover .dropdown-content {
+      display: block;
+  }
+
+  /* FORM (Register / Update) */
+  form {
+      max-width: 600px;
+      margin: 60px auto;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+  }
+
+  /* LABEL */
+  form label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+  }
+
+  /* INPUT */
+  form input,
+  form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      transition: 0.3s;
+  }
+
+  /* FOCUS */
+  form input:focus,
+  form select:focus {
+      border-color: #66bb6a;
+      outline: none;
+      box-shadow: 0 0 5px rgba(102,187,106,0.4);
+  }
+
+  /* BUTTON */
+  button,
+  input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+  }
+
+  button:hover,
+  input[type="submit"]:hover {
+      background: #1b5e20;
+  }
+
+  /* LOGIN BOX (separate card) */
+  .login-box {
+      max-width: 400px;
+      margin: 80px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+  }
+
+  /* Login heading */
+  .login-box h1 {
+      margin-bottom: 20px;
+      color: #2e7d32;
+  }
+
+  /* Align form inside login box */
+  .login-box form {
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+  }
+
+  /* Error message */
+  .error {
+      color: red;
+      margin-top: 10px;
+  }
+
+  /* Register link */
+  .login-box a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: 500;
+  }
+
+  .login-box a:hover {
+      text-decoration: underline;
+  }
+
+  /* RESULT BOX */
+  .result-box {
+      max-width: 600px;
+      margin: 60px auto;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .result-box h1 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 20px;
+  }
+
+  .result-box p {
+      margin-bottom: 12px;
+  }
+
+  .result-box p span {
+      font-weight: 600;
+      margin-left: 8px;
+  }
+
+  /* LINKS AS BUTTON */
+  .result-box a {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 18px;
+      background: #2e7d32;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.3s;
+  }
+
+  .result-box a:hover {
+      background: #1b5e20;
+  }
+
+  .result-box a + a {
+      margin-left: 10px;
+  }
+
+  /* ANIMATION */
+  @keyframes fadeIn {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+    </style>
+</head>
+<body>
+<header class="navbar">
+
+    <div class="logo">Food Rescue AI</div>
+
+    <nav>
+
+        <a href="/form/home">Home</a>
+        <a th:href="@{/form/about}">About</a>
+        <a th:href="@{/form/contact}">Contact</a>
+
+        <div class="dropdown">
+            <span>Hotel</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/register}">Register</a>
+                <a th:href="@{/form/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <span>NGO</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/ngoreg}">Register</a>
+                <a th:href="@{/form/ngologin}">Login</a>
+            </div>
+        </div>
+
+        <!-- ✅ ADD THIS -->
+        <a th:href="@{/admin/adminlogin}">Admin</a>
+
+    </nav>
+</header>
+<form th:action="@{/form/ngologin}" method="post">
+
+    <h1>NGO Login</h1>
+
+    <label>NGO Name</label>
+    <input type="text" name="ngoName" required>
+
+    <label>Mobile Number</label>
+    <input type="text" name="ngoPhone" required>
+
+    <input type="submit" value="Login">
+
+</form>
+
+<p class="error" th:text="${error}"></p>
+<footer class="simple-footer">
+    <center> <p>© 2026 Food Rescue AI</center></p>
+</footer>
+</body>
+</html>

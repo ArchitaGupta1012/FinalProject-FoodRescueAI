@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* BODY */
+body {
+    background: linear-gradient(to right, #f4f7f6, #e8f5e9);
+    color: #333;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #1b5e20;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* LOGO */
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* NAV LINKS */
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #a5d6a7;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.dropdown span {
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* DROPDOWN FIX */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 150px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 999;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background: #e8f5e9;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* FORM CARD */
+form {
+    max-width: 550px;
+    margin: 60px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* LABEL STYLE (auto apply karne ke liye) */
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+/* FOCUS EFFECT */
+form input:focus {
+    border-color: #66bb6a;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102,187,106,0.4);
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1b5e20;
+}</style>
+
+</head>
+<body>
+<header class="navbar">
+
+    <div class="logo">Food Rescue AI</div>
+
+    <nav>
+
+        <a href="/form/home">Home</a>
+        <a th:href="@{/form/about}">About</a>
+        <a th:href="@{/form/contact}">Contact</a>
+
+        <div class="dropdown">
+            <span>Hotel</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/register}">Register</a>
+                <a th:href="@{/form/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <span>NGO</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/ngoreg}">Register</a>
+                <a th:href="@{/form/ngologin}">Login</a>
+            </div>
+        </div>
+
+        <!-- ✅ ADD THIS -->
+        <a th:href="@{/admin/adminlogin}">Admin</a>
+
+    </nav>
+</header>
+<form th:action="@{/form/update-ngo}" method="post" th:object="${ngo}">
+
+    <input type="hidden" th:field="*{id}" />
+
+    Name: <input type="text" th:field="*{ngoName}" /><br><br>
+    Phone: <input type="text" th:field="*{ngoPhone}" /><br><br>
+    Email: <input type="text" th:field="*{ngoEmail}" /><br><br>
+    Address: <input type="text" th:field="*{ngoAddress}" /><br><br>
+    City: <input type="text" th:field="*{ngoCity}" /><br><br>
+    State: <input type="text" th:field="*{ngoState}" /><br><br>
+
+    <button type="submit">Update</button>
+</form>
+<footer class="simple-footer">
+    <center> <p>© 2026 Food Rescue AI</center></p>
+</footer>
+
+</body>
+</html>

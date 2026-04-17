@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Body Background */
+        body {
+            background: linear-gradient(to right, #f4f7f6, #e8f5e9);
+            color: #333;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: #1b5e20;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Nav links */
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #a5d6a7;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            display: inline-block;
+            position: relative;
+            margin: 0 15px;
+        }
+
+        .dropdown span {
+            color: white;
+            font-weight: 500;
+        }
+
+        .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;   /* ye gap hata dega */
+    left: 0;
+    background: white;
+    min-width: 150px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 999;  /* IMPORTANT */
+}
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background: #e8f5e9;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* FORM CONTAINER */
+        form {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Heading */
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            color: #1b5e20;
+        }
+
+        /* Labels */
+        form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        /* Inputs */
+        form input,
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+
+        /* Focus effect */
+        form input:focus,
+        form select:focus {
+            border-color: #66bb6a;
+            outline: none;
+            box-shadow: 0 0 5px rgba(102,187,106,0.4);
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1b5e20;
+        }
+
+        /* Footer */
+        .simple-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<header class="navbar">
+
+    <div class="logo">Food Rescue AI</div>
+
+    <nav>
+
+        <a href="/form/home">Home</a>
+        <a th:href="@{/form/about}">About</a>
+        <a th:href="@{/form/contact}">Contact</a>
+
+        <div class="dropdown">
+            <span>Hotel</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/register}">Register</a>
+                <a th:href="@{/form/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <span>NGO</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/ngoreg}">Register</a>
+                <a th:href="@{/form/ngologin}">Login</a>
+            </div>
+        </div>
+
+        <!-- ✅ ADD THIS -->
+        <a th:href="@{/admin/adminlogin}">Admin</a>
+
+    </nav>
+</header>
+
+<h2>Hotel Registration Form</h2>
+<form th:action="@{/form/submit}" method="post" enctype="multipart/form-data" th:object="${hotel}">
+    <label>Hotel Name:</label>
+    <input type="text" name="hotelname" required><br><br>
+
+    <label>Address:</label>
+    <input type="text" name="address" required><br><br>
+
+    <label>City:</label>
+    <input type="text" name="city" required><br><br>
+
+    <label>State:</label>
+    <input type="text" name="state" required><br><br>
+
+    <label>Contact Person:</label>
+    <input type="text" name="contactperson" required><br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" required><br><br>
+
+    <label>Phone Number:</label>
+    <input type="text" name="mobileno" required><br><br>
+
+    <label>Hotel Type:</label>
+    <select name="hoteltype">
+        <option value="5-star">5-star</option>
+        <option value="4-star">4-star</option>
+        <option value="3-star">3-star</option>
+        <option value="Other">Other</option>
+    </select><br><br>
+
+    <label>Upload Food License:</label>
+    <input type="file" name="file" required><br><br>
+
+    <button type="submit">Register Hotel</button>
+
+    <footer class="simple-footer">
+        <p>© 2026 Food Rescue AI</p>
+    </footer>
+</form>
+</body>
+</html>

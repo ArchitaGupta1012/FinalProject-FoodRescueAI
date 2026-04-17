@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* RESET */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Segoe UI', sans-serif;
+ }
+
+ /* BODY */
+ body {
+     background: linear-gradient(to right, #f8f9fa, #eef1f4);
+     color: #333;
+ }
+
+ /* NAVBAR */
+ .navbar {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 15px 40px;
+     background: #2f2f2f;
+     color: white;
+     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+ }
+
+ /* LOGO */
+ .logo {
+     font-size: 22px;
+     font-weight: bold;
+     letter-spacing: 1px;
+ }
+
+ /* NAV LINKS */
+ nav a {
+     margin: 0 15px;
+     text-decoration: none;
+     color: #e0e0e0;
+     font-weight: 500;
+     transition: 0.3s;
+ }
+
+ nav a:hover {
+     color: #d4af37; /* gold touch */
+ }
+
+ /* DROPDOWN */
+ .dropdown {
+     position: relative;
+     display: inline-block;
+     margin: 0 15px;
+     cursor: pointer;
+ }
+
+ .dropdown span {
+     color: #e0e0e0;
+     font-weight: 500;
+ }
+
+ /* DROPDOWN */
+ .dropdown-content {
+     display: none;
+     position: absolute;
+     top: 100%;
+     left: 0;
+     background: white;
+     min-width: 150px;
+     border-radius: 6px;
+     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+     z-index: 999;
+     overflow: hidden;
+ }
+
+ .dropdown-content a {
+     display: block;
+     padding: 10px;
+     color: #333;
+     text-decoration: none;
+ }
+
+ .dropdown-content a:hover {
+     background: #f1f1f1;
+ }
+
+ .dropdown:hover .dropdown-content {
+     display: block;
+ }
+
+ /* HEADING */
+ h1 {
+     text-align: center;
+     margin-top: 40px;
+     color: #444;
+ }
+
+ /* FORM */
+ form {
+     max-width: 400px;
+     margin: 40px auto;
+     background: white;
+     padding: 30px 35px;
+     border-radius: 12px;
+     box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+     animation: fadeIn 0.6s ease-in-out;
+ }
+
+ /* INPUT */
+ form input {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 18px;
+     border-radius: 6px;
+     border: 1px solid #ccc;
+     transition: 0.3s;
+ }
+
+ /* FOCUS */
+ form input:focus {
+     border-color: #d4af37;
+     outline: none;
+     box-shadow: 0 0 5px rgba(212,175,55,0.3);
+ }
+
+ /* BUTTON */
+ button,
+ input[type="submit"] {
+     width: 100%;
+     padding: 12px;
+     background: #2f2f2f;
+     color: white;
+     border: none;
+     border-radius: 6px;
+     font-size: 16px;
+     cursor: pointer;
+     transition: 0.3s;
+ }
+
+ button:hover,
+ input[type="submit"]:hover {
+     background: #1f1f1f;
+ }
+
+ /* ANIMATION */
+ @keyframes fadeIn {
+     from {
+         opacity: 0;
+         transform: translateY(20px);
+     }
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+    </style>
+</head>
+<body>
+<header class="navbar">
+
+    <div class="logo">Food Rescue AI</div>
+
+    <nav>
+
+        <a href="/form/home">Home</a>
+        <a th:href="@{/form/about}">About</a>
+        <a th:href="@{/form/contact}">Contact</a>
+
+        <div class="dropdown">
+            <span>Hotel</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/register}">Register</a>
+                <a th:href="@{/form/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <span>NGO</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/ngoreg}">Register</a>
+                <a th:href="@{/form/ngologin}">Login</a>
+            </div>
+        </div>
+
+        <!-- ✅ ADD THIS -->
+        <a th:href="@{/admin/adminlogin}">Admin</a>
+
+    </nav>
+</header>
+<h1>Admin Login</h1>
+
+<p style="text-align:center; color:#888; font-size:14px;">
+    Admin Access Panel 🔐
+</p>
+<form action="/admin/login" method="post">
+    Username: <input type="text" name="username" /><br><br>
+    Password: <input type="password" name="password" /><br><br>
+
+    <button type="submit">Login</button>
+</form>
+<footer class="simple-footer">
+    <center> <p>© 2026 Food Rescue AI</center></p>
+</footer>
+
+</body>
+</html>

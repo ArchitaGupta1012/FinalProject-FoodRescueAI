@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Hotel Data</title>
+
+        <style>
+            /* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* BODY */
+body {
+    background: linear-gradient(to right, #f8f9fa, #eef1f4);
+    color: #333;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #2f2f2f;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #d4af37;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.dropdown span {
+    color: #e0e0e0;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 150px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 999;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* SEARCH BAR (IMPORTANT 🔥) */
+#hotelSearch {
+    display: block;
+    width: 50%;
+    margin: 30px auto 10px;
+    padding: 12px 15px;
+    border-radius: 30px;
+    border: 2px solid #2f2f2f;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+/* Focus = highlight */
+#hotelSearch:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 10px rgba(212,175,55,0.3);
+}
+
+/* TABLE BOX */
+.table-box {
+    width: 90%;
+    margin: 20px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* HEADING */
+.table-box h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* HEADER */
+table th {
+    background: #2f2f2f;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* CELLS */
+table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* ROW HOVER */
+table tr:hover {
+    background: #f5f5f5;
+}
+
+/* LINKS */
+table a {
+    color: #2f2f2f;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+table a:hover {
+    color: #d4af37;
+}
+
+/* DELETE LINK */
+table a:last-child {
+    color: #b71c1c;
+}
+
+table a:last-child:hover {
+    color: #7f0000;
+}
+
+/* BACK BUTTON */
+.table-box > a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 15px;
+    background: #2f2f2f;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.table-box > a:hover {
+    background: #1f1f1f;
+}
+        </style>
+
+    </head>
+
+    <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const searchBox = document.getElementById("hotelSearch");
+            const tableBody = document.getElementById("hotelTable");
+
+            searchBox.addEventListener("keyup", function () {
+
+                let keyword = this.value;
+
+                fetch("/admin/search-hotel?keyword=" + keyword)
+                .then(res => res.json())
+                .then(data => {
+
+                    tableBody.innerHTML = "";
+
+                    data.forEach(h => {
+                        tableBody.innerHTML += `
+                        <tr>
+                            <td>${h.hotelname}</td>
+                            <td>${h.mobileno}</td>
+                            <td>${h.email}</td>
+                            <td>${h.hoteltype}</td>
+                            <td>${h.address}</td>
+                            <td>${h.city}</td>
+                            <td>${h.contactperson}</td>
+                            <td>
+                                <a href="/admin/viewfile/${h.filename}" target="_blank">View File</a>
+                            </td>
+                            <td>
+                                <a href="/admin/delete-hotel/${h.id}"
+                                onclick="return confirm('Delete this hotel?')">Delete</a>
+                            </td>
+                        </tr>`;
+                    });
+
+                });
+            });
+        });
+    </script>
+<br>
+    <header class="navbar">
+
+        <div class="logo">Food Rescue AI</div>
+
+        <nav>
+
+            <a href="/form/home">Home</a>
+            <a th:href="@{/form/about}">About</a>
+            <a th:href="@{/form/contact}">Contact</a>
+
+            <div class="dropdown">
+                <span>Hotel</span>
+                <div class="dropdown-content">
+                    <a th:href="@{/form/register}">Register</a>
+                    <a th:href="@{/form/login}">Login</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <span>NGO</span>
+                <div class="dropdown-content">
+                    <a th:href="@{/form/ngoreg}">Register</a>
+                    <a th:href="@{/form/ngologin}">Login</a>
+                </div>
+            </div>
+
+            <!-- ✅ ADD THIS -->
+            <a th:href="@{/admin/adminlogin}">Admin</a>
+
+        </nav>
+    </header>
+
+<input type="text" id="hotelSearch" placeholder="Search hotels...">
+
+    <p style="text-align:center; color:#777; font-size:14px;">
+        Search and manage registered hotels
+    </p>
+<br><br>
+<br>
+<div class="table-box">
+
+<h3>Hotels</h3>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Hotel Type</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Contact Person</th>
+        <th>Food License</th>
+        <th>Action</th>
+
+    </tr>
+    <tbody id="hotelTable">
+    <tr th:each="h : ${hotels}">
+        <td th:text="${h.hotelname}"></td>
+        <td th:text="${h.mobileno}"></td>
+        <td th:text="${h.email}"></td>
+        <td th:text="${h.hoteltype}"></td>
+        <td th:text="${h.address}"></td>
+        <td th:text="${h.city}"></td>
+        <td th:text="${h.contactperson}"></td>
+        <td>
+            <a th:href="@{'/admin/viewfile/' + ${h.filename}}" target="_blank">
+                View File
+            </a>
+        </td>
+        <td>
+            <a th:href="@{'/admin/delete-hotel/' + ${h.id}}"
+               onclick="return confirm('Are you sure?')">
+                Delete
+            </a>
+        </td>
+    </tr>
+</table>
+<a href="/admin/dashboard">Back to Dashboard</a>
+</div>
+    <footer class="simple-footer">
+        <center> <p>© 2026 Food Rescue AI</center></p>
+    </footer>
+
+    </body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* BODY */
+        body {
+            background: linear-gradient(to right, #f8f9fa, #eef1f4);
+            color: #333;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: #2f2f2f;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        /* DROPDOWN */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        .dropdown span {
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 150px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 999;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* SEARCH BAR 🔥 */
+        #foodSearch {
+            display: block;
+            width: 50%;
+            margin: 30px auto 10px;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: 2px solid #2f2f2f;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        #foodSearch:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 10px rgba(212,175,55,0.3);
+        }
+
+        /* TABLE BOX */
+        .table-box {
+            width: 95%;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        /* HEADING */
+        .table-box h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        /* HEADER */
+        table th {
+            background: #2f2f2f;
+            color: white;
+            padding: 12px;
+            font-size: 13px;
+        }
+
+        /* CELLS */
+        table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        /* ROW HOVER */
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* STATUS COLORS 🔥 */
+        td span {
+            font-weight: 600;
+        }
+
+        td span:contains("Available") {
+            color: green;
+        }
+
+        td span:contains("Claimed") {
+            color: orange;
+        }
+
+        td span:contains("Expired") {
+            color: red;
+        }
+
+        /* DELETE LINK */
+        table a {
+            color: #b71c1c;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        table a:hover {
+            color: #7f0000;
+        }
+
+        /* BACK BUTTON */
+        .table-box > a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background: #2f2f2f;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .table-box > a:hover {
+            background: #1f1f1f;
+        }
+
+    </style>
+</head>
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const searchBox = document.getElementById("foodSearch");
+        const tableBody = document.getElementById("foodTable");
+
+        searchBox.addEventListener("keyup", function () {
+
+            let keyword = this.value;
+
+            fetch("/admin/search-food?keyword=" + keyword)
+            .then(res => res.json())
+            .then(data => {
+
+                tableBody.innerHTML = "";
+
+                data.forEach(f => {
+                    tableBody.innerHTML += `
+                    <tr>
+                        <td>${f.hotel_name}</td>
+                        <td>${f.food_description}</td>
+                        <td>${f.food_type}</td>
+                        <td>${f.quantity}</td>
+                        <td>${f.expiry_time}</td>
+                        <td>${f.pickup_address}</td>
+                        <td>${f.contact_person}</td>
+                        <td>${f.ph_no}</td>
+                        <td>${f.claimedByNgoName || ''}</td>
+                        <td>${f.claimedByNgoPhone || ''}</td>
+                        <td>${f.status}</td>
+                        <td>
+                            <a href="/admin/delete-food/${f.id}"
+                            onclick="return confirm('Delete this food?')">Delete</a>
+                        </td>
+                    </tr>`;
+                });
+
+            });
+        });
+    });
+</script>
+<br><header class="navbar">
+
+    <div class="logo">Food Rescue AI</div>
+
+    <nav>
+
+        <a href="/form/home">Home</a>
+        <a th:href="@{/form/about}">About</a>
+        <a th:href="@{/form/contact}">Contact</a>
+
+        <div class="dropdown">
+            <span>Hotel</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/register}">Register</a>
+                <a th:href="@{/form/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <span>NGO</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/ngoreg}">Register</a>
+                <a th:href="@{/form/ngologin}">Login</a>
+            </div>
+        </div>
+
+        <!-- ✅ ADD THIS -->
+        <a th:href="@{/admin/adminlogin}">Admin</a>
+
+    </nav>
+</header>
+<input type="text" id="foodSearch" placeholder="Search food...">
+<p style="text-align:center; color:#777; font-size:14px;">
+    Search and manage registered Foods
+</p>
+<br><br>
+<br>
+<br>
+<div class="table-box">
+
+<h3>Food Donations List</h3>
+<table border="1">
+    <tr>
+        <th>Hotel Name</th>
+        <th>Food Name</th>
+        <th>Food Type</th>
+        <th>Food Quantity(in serves)</th>
+        <th>(food)Fresh Until</th>
+        <th>Pickup Address</th>
+        <th>Contact Person</th>
+        <th>Mobile Number</th>
+        <th>Claimed By NGO</th>
+        <th>NGO Phone</th>
+        <th>Status</th>
+        <th>Action</th>
+
+    </tr>
+    <tbody id="foodTable">
+    <tr th:each="f : ${foods}">
+        <td th:text="${f.hotelName}"></td>
+        <td th:text="${f.food_description}"></td>
+        <td th:text="${f.food_type}"></td>
+        <td th:text="${f.quantity}"></td>
+        <td th:text="${f.expiry_time}"></td>
+        <td th:text="${f.pickup_address}"></td>
+        <td th:text="${f.contact_person}"></td>
+        <td th:text="${f.ph_no}"></td>
+        <td>
+            <span th:if="${f.requestedByNgoName != null}"
+                  th:text="${f.requestedByNgoName}"></span>
+
+            <span th:if="${f.requestedByNgoName == null}">
+                Not Claimed
+            </span>
+        </td>
+        <td th:text="${f.requestStatus}"></td>
+        <td>
+            <span th:if="${f.status == 'AVAILABLE'}" style="color:green; font-weight:bold;">Available</span>
+            <span th:if="${f.status == 'CLAIMED'}" style="color:orange; font-weight:bold;">Claimed</span>
+            <span th:if="${f.status == 'EXPIRED'}" style="color:red; font-weight:bold;">Expired</span>
+        </td>
+        <td>
+            <a th:href="@{'/admin/delete-food/' + ${f.id}}"
+               onclick="return confirm('Delete this food?')">
+                Delete
+            </a>
+        </td>
+    </tr>
+</table>
+<a href="/admin/dashboard">Back to Dashboard</a>
+</div>
+<footer class="simple-footer">
+    <center> <p>© 2026 Food Rescue AI</center></p>
+</footer>
+
+</body>
+</html>

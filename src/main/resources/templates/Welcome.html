@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f6f8f7;
+            margin: 0;
+        }
+
+        .home-box {
+            max-width: 420px;
+            margin: 80px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            text-align: center;
+            border-top: 4px solid #81c784; /* subtle green accent */
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #2e7d32;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .section-title {
+            font-size: 13px;
+            color: #9aa5a1;
+            text-align: left;
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        a {
+            display: block;
+            text-decoration: none;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            color: #333;
+            background: #fafafa;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        a:hover {
+            background: #f1f5f4;
+            border-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        /* small subtle green dot */
+        a::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #c8e6c9;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* Admin special style */
+        .admin-link {
+            background: #fff6f6;
+            border: 1px solid #f0c0c0;
+            color: #b23b3b;
+            font-weight: 600;
+        }
+
+        .admin-link:hover {
+            background: #ffecec;
+            border-color: #e89a9a;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="home-box">
+
+    <h1>Food Rescue AI Portal</h1>
+    <h2>AI-Powered Food Waste Management Platform</h2>
+
+    <div class="section-title">Hotel Access</div>
+    <a th:href="@{/form/register}">Hotel Registration </a><br>
+    <a th:href="@{/form/login}">Login As Hotel</a><br><br>
+
+    <div class="section-title">NGO Access</div>
+    <a th:href="@{/form/ngoreg}">NGO Registration </a><br>
+    <a th:href="@{/form/ngologin}">Login As NGO</a><br><br>
+
+    <div class="section-title">Administration</div>
+    <a th:href="@{/admin/adminlogin}">Admin Portal</a>
+
+</div>
+
+</body>
+</html>

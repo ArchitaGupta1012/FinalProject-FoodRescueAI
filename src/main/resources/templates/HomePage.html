@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Rescue AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+
+
+
+ /* RESET */
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Poppins', sans-serif;
+ }
+
+ /* BODY */
+ body {
+    background: #ffffff;  /* pure white */
+    color: #333;
+    animation: pageFade 0.8s ease-in-out;
+}
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+ /* NAVBAR */
+ .navbar {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 15px 40px;
+     background: #1b5e20;
+     color: white;
+     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+ }
+
+ .logo {
+     font-size: 22px;
+     font-weight: bold;
+ }
+
+ /* NAV LINKS */
+ nav a {
+     margin: 0 15px;
+     text-decoration: none;
+     color: white;
+     font-weight: 500;
+     transition: 0.3s;
+ }
+
+ nav a:hover {
+     color: #a5d6a7;
+ }
+
+ /* DROPDOWN */
+ .dropdown {
+     position: relative;
+     display: inline-block;
+     margin: 0 15px;
+ }
+
+ .dropdown span {
+     color: white;
+     font-weight: 500;
+     cursor: pointer;
+ }
+
+ .dropdown-content {
+     display: none;
+     position: absolute;
+     top: 100%;
+     left: 0;
+     background: white;
+     min-width: 150px;
+     border-radius: 6px;
+     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+     z-index: 999;
+ }
+
+ .dropdown-content a {
+     display: block;
+     padding: 10px;
+     color: #333;
+     text-decoration: none;
+ }
+
+ .dropdown-content a:hover {
+     background: #e8f5e9;
+ }
+
+ .dropdown:hover .dropdown-content {
+     display: block;
+ }
+
+ /* HERO */
+ .hero {
+    width: 90%;              /* side spacing */
+    margin: 30px auto;      /* center + gap from navbar */
+    border-radius: 15px;    /* smooth corners */
+    overflow: hidden;       /* clean edges */
+    height: 60vh;
+
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+    url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c');
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    color: white;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+ .hero h1 {
+     font-size: 42px;
+     margin-bottom: 10px;
+ }
+
+ .hero p {
+     font-size: 18px;
+     opacity: 0.9;
+     margin-bottom: 20px;
+ }
+
+ /* HERO BUTTON */
+ .hero a {
+     display: inline-block;
+     padding: 12px 22px;
+     background: #2e7d32;
+     color: white;
+     text-decoration: none;
+     border-radius: 6px;
+     transition: 0.3s;
+ }
+
+ .hero a:hover {
+     background: #1b5e20;
+ }
+
+ /* MAIN CONTAINER */
+ .main-container {
+     width: 85%;
+     margin: 40px auto;
+ }
+
+ /* SECTION */
+ .section {
+     background: white;
+     padding: 30px;
+     margin-bottom: 25px;
+     border-radius: 12px;
+     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+     animation: fadeUp 0.8s ease;
+ }
+
+ .section h2 {
+     color: #1b5e20;
+     margin-bottom: 15px;
+ }
+
+ /* FEATURES */
+ .features {
+     display: flex;
+     gap: 20px;
+     flex-wrap: wrap;
+ }
+
+ .feature-box {
+     flex: 1;
+     min-width: 220px;
+     background: #f1f8f2;
+     padding: 20px;
+     border-radius: 10px;
+     text-align: center;
+     transition: 0.3s;
+ }
+
+ .feature-box:hover {
+     transform: translateY(-5px);
+ }
+
+ .feature-box h3 {
+     color: #2e7d32;
+     margin-bottom: 10px;
+ }
+
+ /* FOOTER */
+ footer {
+     background: #1b5e20;
+     color: white;
+     text-align: center;
+     padding: 20px;
+     margin-top: 40px;
+ }
+
+ /* ANIMATION */
+ @keyframes fadeUp {
+     from {
+         opacity: 0;
+         transform: translateY(20px);
+     }
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+    </style>
+
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">Food Rescue AI</div>
+
+    <nav>
+
+        <a href="/form/home">Home</a>
+        <a th:href="@{/form/about}">About</a>
+        <a th:href="@{/form/contact}">Contact</a>
+
+        <div class="dropdown">
+            <span>Hotel</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/register}">Register</a>
+                <a th:href="@{/form/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <span>NGO</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/ngoreg}">Register</a>
+                <a th:href="@{/form/ngologin}">Login</a>
+            </div>
+        </div>
+
+        <!-- ✅ ADD THIS -->
+        <a th:href="@{/admin/adminlogin}">Admin</a>
+
+    </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+    <div>
+        <h1>Reduce Food Waste, Feed Lives</h1>
+        <p>AI-powered platform connecting hotels with NGOs to save food and serve humanity.</p>
+
+        <a th:href="@{/form/choose-role}">Start Saving Food</a>    </div>
+</div>
+<div class="main-container">
+<!-- ABOUT -->
+<div class="section">
+    <h2>About Food Rescue AI</h2>
+    <p>
+        Food Rescue AI is a smart platform that connects food donors like hotels with NGOs.
+        Using intelligent suggestions, it helps NGOs find nearby food quickly and efficiently,
+        reducing food waste and helping those in need.
+    </p>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+    <h2>Our Features</h2>
+
+    <div class="features">
+        <div class="feature-box">
+            <h3>AI Suggestions</h3>
+            <p>Smart recommendations show food within your preferred distance.</p>
+        </div>
+
+        <div class="feature-box">
+            <h3>Real-Time Food Listing</h3>
+            <p>Hotels can instantly list available food for NGOs to claim.</p>
+        </div>
+
+        <div class="feature-box">
+            <h3>Easy Claim Process</h3>
+            <p>NGOs can quickly claim food with just one click.</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+
+    <footer>
+        <center><p>© 2026 Food Rescue AI | Built for a Better Tomorrow 🌱</center> </p>
+        <center> <p> Project Developed By : Archita Gupta.</center></p>
+        <center> <p> Company Email Id : JKInnovative.amt@gmail.com</center></p>
+        <center> <p> Mobile No.: 9529842151.</center></p>
+    </footer>
+
+</body>
+</html>

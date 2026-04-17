@@ -1,0 +1,109 @@
+/* BODY */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+/* NAVBAR */
+.navbar {
+    width: 85%;
+    margin: 20px auto;
+    padding: 15px 30px;
+
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* LOGO */
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* NAV LINKS */
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* FORM */
+form {
+    max-width: 550px;
+    margin: 40px auto;
+    padding: 30px;
+
+    background: white;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* INPUTS */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #2563eb;
+    color: white;
+
+    font-weight: 600;
+}
+
+/* BACK LINK */
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #2563eb;
+}

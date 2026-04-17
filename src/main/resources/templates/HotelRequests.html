@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #1b5e20;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* LOGO */
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* NAV LINKS */
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #a5d6a7;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.dropdown span {
+    color: white;
+    font-weight: 500;
+}
+
+/* DROPDOWN FIX */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 150px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 999;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background: #e8f5e9;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+        .main-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #2e7d32;
+}
+
+/* GRID */
+.request-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.request-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.request-card:hover {
+    transform: translateY(-5px);
+}
+
+/* TEXT */
+.request-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.request-card p {
+    margin: 6px 0;
+    color: #555;
+}
+
+/* STATUS */
+.status {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.pending {
+    color: orange;
+}
+
+/* BUTTONS */
+.btn-group {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.approve-btn {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.reject-btn {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.approve-btn:hover {
+    background: #388e3c;
+}
+
+.reject-btn:hover {
+    background: #c62828;
+}
+
+    </style>
+</head>
+<body>
+<header class="navbar">
+
+    <div class="logo">Food Rescue AI</div>
+
+    <nav>
+
+        <a href="/form/home">Home</a>
+        <a th:href="@{/form/about}">About</a>
+        <a th:href="@{/form/contact}">Contact</a>
+
+        <div class="dropdown">
+            <span>Hotel</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/register}">Register</a>
+                <a th:href="@{/form/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <span>NGO</span>
+            <div class="dropdown-content">
+                <a th:href="@{/form/ngoreg}">Register</a>
+                <a th:href="@{/form/ngologin}">Login</a>
+            </div>
+        </div>
+
+        <!-- ✅ ADD THIS -->
+        <a th:href="@{/admin/adminlogin}">Admin</a>
+
+    </nav>
+</header>
+<div class="main-container">
+
+    <h2 class="page-title">NGO Food Requests</h2>
+
+    <div class="request-grid">
+
+        <div class="request-card" th:each="f : ${requests}">
+
+            <!-- FOOD INFO -->
+            <h3 th:text="${f.food_description}">Food Name</h3>
+
+            <p><strong>Hotel:</strong> <span th:text="${f.hotel_name}"></span></p>
+
+            <p><strong>NGO Name:</strong>
+                <span th:text="${f.requestedByNgoName}"></span>
+            </p>
+
+            <p><strong>Phone:</strong>
+                <span th:text="${f.requestedByNgoPhone}"></span>
+            </p>
+
+            <!-- STATUS -->
+            <p class="status pending"
+               th:if="${f.requestStatus == 'PENDING'}">Pending Request</p>
+
+            <!-- ACTION BUTTONS -->
+            <div class="btn-group">
+
+                <form th:action="@{'/form/approve/' + ${f.id}}" method="post">
+                    <button class="approve-btn">Approve</button>
+                </form>
+
+                <form th:action="@{'/form/reject/' + ${f.id}}" method="post">
+                    <button class="reject-btn">Reject</button>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
